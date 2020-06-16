@@ -53,7 +53,7 @@ class ViewController: UIViewController {
         self.view.addSubview(sudokuGrid)
         
         createGrid(with: sudokuGrid, cellsWide)
-        // we're on the new branch 
+        
 
         //let solveButton = UIButton(frame: CGRect(x: (drawExamples.frame.width)/2, y: (screenSize.height - 200), width: frameSides, height: frameSides/9))
         //let solveButton = UIButton(type: .roundedRect)
