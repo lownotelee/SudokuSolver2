@@ -11,7 +11,12 @@
 		9B12A5C9220D9CA000C7EFF5 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B12A5C8220D9CA000C7EFF5 /* ViewController.swift */; };
 		9B12A5CC220D9CA000C7EFF5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B12A5CA220D9CA000C7EFF5 /* Main.storyboard */; };
 		9B12A5CE220D9CA200C7EFF5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9B12A5CD220D9CA200C7EFF5 /* Assets.xcassets */; };
-		9B12A5D1220D9CA200C7EFF5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9B12A5CF220D9CA200C7EFF5 /* LaunchScreen.storyboard */; };
+		9B12A5D9220D9CC400C7EFF5 /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B12A5D8220D9CC400C7EFF5 /* Cell.swift */; };
+		9B3E4A77222A005B00A575CE /* SudokuGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3E4A76222A005B00A575CE /* SudokuGame.swift */; };
+		9B3E4A79222A137600A575CE /* DrawExamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3E4A78222A137600A575CE /* DrawExamples.swift */; };
+		9B4C7B372498D307005AD45F /* Gameboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B4C7B362498D307005AD45F /* Gameboard.swift */; };
+		9BF1FDAC2425DA9A0077056D /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF1FDAB2425DA9A0077056D /* GridView.swift */; };
+		9BF1FDAE2425E60A0077056D /* GetPuzzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF1FDAD2425E60A0077056D /* GetPuzzle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,8 +25,13 @@
 		9B12A5C8220D9CA000C7EFF5 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		9B12A5CB220D9CA000C7EFF5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9B12A5CD220D9CA200C7EFF5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		9B12A5D0220D9CA200C7EFF5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		9B12A5D2220D9CA200C7EFF5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9B12A5D8220D9CC400C7EFF5 /* Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
+		9B3E4A76222A005B00A575CE /* SudokuGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuGame.swift; sourceTree = "<group>"; };
+		9B3E4A78222A137600A575CE /* DrawExamples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawExamples.swift; sourceTree = "<group>"; };
+		9B4C7B362498D307005AD45F /* Gameboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gameboard.swift; sourceTree = "<group>"; };
+		9BF1FDAB2425DA9A0077056D /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
+		9BF1FDAD2425E60A0077056D /* GetPuzzle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPuzzle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,7 +49,6 @@
 			isa = PBXGroup;
 			children = (
 				9B12A5C5220D9CA000C7EFF5 /* SudokuSolver2 */,
-				9B12A5C4220D9CA000C7EFF5 /* Products */,
 			);
 			sourceTree = "<group>";
 		};
@@ -49,19 +58,42 @@
 				9B12A5C3220D9CA000C7EFF5 /* SudokuSolver2.app */,
 			);
 			name = Products;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		9B12A5C5220D9CA000C7EFF5 /* SudokuSolver2 */ = {
 			isa = PBXGroup;
 			children = (
+				9B87CCBD2463FBE0005EB3AF /* VIews */,
+				9B1C99E12463E9F20000431A /* Models */,
 				9B12A5C6220D9CA000C7EFF5 /* AppDelegate.swift */,
 				9B12A5C8220D9CA000C7EFF5 /* ViewController.swift */,
 				9B12A5CA220D9CA000C7EFF5 /* Main.storyboard */,
 				9B12A5CD220D9CA200C7EFF5 /* Assets.xcassets */,
-				9B12A5CF220D9CA200C7EFF5 /* LaunchScreen.storyboard */,
 				9B12A5D2220D9CA200C7EFF5 /* Info.plist */,
+				9B3E4A78222A137600A575CE /* DrawExamples.swift */,
+				9B12A5C4220D9CA000C7EFF5 /* Products */,
+				9BF1FDAD2425E60A0077056D /* GetPuzzle.swift */,
 			);
 			path = SudokuSolver2;
+			sourceTree = "<group>";
+		};
+		9B1C99E12463E9F20000431A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				9B12A5D8220D9CC400C7EFF5 /* Cell.swift */,
+				9B3E4A76222A005B00A575CE /* SudokuGame.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		9B87CCBD2463FBE0005EB3AF /* VIews */ = {
+			isa = PBXGroup;
+			children = (
+				9BF1FDAB2425DA9A0077056D /* GridView.swift */,
+				9B4C7B362498D307005AD45F /* Gameboard.swift */,
+			);
+			path = VIews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -96,6 +128,7 @@
 				TargetAttributes = {
 					9B12A5C2220D9CA000C7EFF5 = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1020;
 					};
 				};
 			};
@@ -122,7 +155,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9B12A5D1220D9CA200C7EFF5 /* LaunchScreen.storyboard in Resources */,
 				9B12A5CE220D9CA200C7EFF5 /* Assets.xcassets in Resources */,
 				9B12A5CC220D9CA000C7EFF5 /* Main.storyboard in Resources */,
 			);
@@ -136,7 +168,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				9B12A5C9220D9CA000C7EFF5 /* ViewController.swift in Sources */,
+				9B3E4A77222A005B00A575CE /* SudokuGame.swift in Sources */,
+				9B3E4A79222A137600A575CE /* DrawExamples.swift in Sources */,
 				9B12A5C7220D9CA000C7EFF5 /* AppDelegate.swift in Sources */,
+				9B4C7B372498D307005AD45F /* Gameboard.swift in Sources */,
+				9BF1FDAC2425DA9A0077056D /* GridView.swift in Sources */,
+				9B12A5D9220D9CC400C7EFF5 /* Cell.swift in Sources */,
+				9BF1FDAE2425E60A0077056D /* GetPuzzle.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,14 +187,6 @@
 				9B12A5CB220D9CA000C7EFF5 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		9B12A5CF220D9CA200C7EFF5 /* LaunchScreen.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				9B12A5D0220D9CA200C7EFF5 /* Base */,
-			);
-			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -291,7 +321,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.radev.SudokuSolver2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -309,7 +339,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.radev.SudokuSolver2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
