@@ -28,7 +28,6 @@ struct SudokuSolver {
     
     func solve() {
         //printSomething()
-         
     }
     
     // test function to make something happen
@@ -94,6 +93,7 @@ struct SudokuSolver {
     }
     
     // returns an array of known numbers given an array of cells. Used by findPossibilities
+    // TODO: convert to Set instead of Array
     private func getArrayOfKnownNumbers(for cells: [Cell]) -> [Int] {
         var arrayOfNumbers: [Int] = []
         for i in 0..<(cells.count) {

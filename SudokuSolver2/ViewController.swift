@@ -48,25 +48,9 @@ class ViewController: UIViewController {
         
         let cellsWide = bigSquare1.count
         
-        let sudokuGrid = GridView(frame: CGRect(x:10, y:100, width: screenSize.width - 20, height: screenSize.width - 20))
-        
-        self.view.addSubview(sudokuGrid)
-        
-        createGrid(with: sudokuGrid, cellsWide)
-        // we're on the new branch 
-
-        //let solveButton = UIButton(frame: CGRect(x: (drawExamples.frame.width)/2, y: (screenSize.height - 200), width: frameSides, height: frameSides/9))
-        //let solveButton = UIButton(type: .roundedRect)
-        
-        let solveButton = UIButton(frame: CGRect(x: (screenSize.width/2)-50, y: 600, width: 100, height: 50))
-        solveButton.backgroundColor = .blue
-        solveButton.setTitleColor(.white, for: .normal)
-        solveButton.setTitle("Solve!", for: .normal)
-        solveButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
-        
-        self.view.addSubview(solveButton)
-        
-        sudokuGrid.addLine(fromPoint: CGPoint(x: 0,y: 0), toPoint: CGPoint(x: 100,y: 100), line: 5)
+        putBaseSquareOn()
+        putSolveButtonOn()
+        createCellButtons()
         
         /*
         var targetCell: Int = 0
@@ -104,58 +88,40 @@ class ViewController: UIViewController {
         }*/
     }
     
-    func createGrid(with gridView: UIView, _ puzzleSize: Int) {
-        let frameSides = gridView.bounds.width        
-
-        var lineWidth = 0
-
-        var xStartCoord:Double = 0
-        var yStartCoord: Double = 0
-        var scaler: Double = 0
-
+    func putSolveButtonOn() {
+        let solveButton = UIButton(frame: CGRect(x: (screenSize.width/2)-50, y: 600, width: 100, height: 50))
+        solveButton.backgroundColor = .blue
+        solveButton.setTitleColor(.white, for: .normal)
+        solveButton.setTitle("Solve!", for: .normal)
+        solveButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         
-        for verticalScaler in 0...(puzzleSize) {
-            if verticalScaler % Int(sqrt(Float(puzzleSize))) == 0 {
-                lineWidth = 5
-            } else {
-                lineWidth = 2
-            }
-            scaler = Double(verticalScaler)/Double(puzzleSize)
-            xStartCoord = (Double(frameSides) * scaler) + Double(gridView.bounds.minX)
-
-            //addLine(fromPoint: CGPoint(x: xStartCoord, y: Double(gridView.frame.minY)),toPoint: CGPoint(x: xStartCoord, y: Double(gridView.bounds.maxX) + 90), line: lineWidth)
-        }
-
-        for horizontalScaler in 0...(puzzleSize) {
-            if horizontalScaler % Int(sqrt(Float(puzzleSize))) == 0 {
-                lineWidth = 5
-            } else {
-                lineWidth = 2
-            }
-
-            scaler = Double(horizontalScaler)/Double(puzzleSize)
-            yStartCoord = (Double(frameSides) * scaler) + Double(gridView.bounds.minY)
-
-            
-            //addLine(fromPoint: CGPoint(x: Double(gridView.bounds.minX), y: Double(yStartCoord)), toPoint: CGPoint(x: Double(gridView.bounds.maxX), y: Double(yStartCoord)), line: lineWidth)
-        }
+        self.view.addSubview(solveButton)
+    }
+    
+    let baseSquare = BaseSquare(9)
+    
+    func createCellButtons() {
+        let boardWidth = baseSquare.frame.minX
+        print("minX is \(baseSquare.frame.minX), maxX is \(baseSquare.frame.maxX)")
+    }
+    
+    func putBaseSquareOn() {
+        view.addSubview(baseSquare)
+        baseSquare.translatesAutoresizingMaskIntoConstraints = false
+        
+        let offSet: CGFloat = view.bounds.width * (0.05)
+        
+        NSLayoutConstraint.activate([
+            baseSquare.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 0),
+            baseSquare.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 0),
+            baseSquare.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: offSet),
+            baseSquare.heightAnchor.constraint(equalTo: self.view.widthAnchor, constant: (offSet * -2))
+        ])
     }
     
     func updateCell() {
         print("fucklallla")
         print(cellButtons[21])
-    }
-    
-    func addLine(fromPoint start: CGPoint, toPoint end: CGPoint, line thickness: Int) {
-        let line = CAShapeLayer()
-        let linePath = UIBezierPath()
-        linePath.move(to: start)
-        linePath.addLine(to: end)
-        line.path = linePath.cgPath
-        line.strokeColor = UIColor.black.cgColor
-        line.lineWidth = CGFloat(thickness)
-        line.lineJoin = CAShapeLayerLineJoin.round
-        self.view.layer.addSublayer(line)
     }
     
     @objc func cellButtonAction(sender: UIButton!) {

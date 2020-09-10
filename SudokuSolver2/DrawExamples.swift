@@ -45,5 +45,4 @@ class DrawExamples: UIView {
             context!.strokePath()
         }
     }
-
 }

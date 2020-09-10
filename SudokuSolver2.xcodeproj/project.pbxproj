@@ -14,8 +14,7 @@
 		9B12A5D9220D9CC400C7EFF5 /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B12A5D8220D9CC400C7EFF5 /* Cell.swift */; };
 		9B3E4A77222A005B00A575CE /* SudokuGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3E4A76222A005B00A575CE /* SudokuGame.swift */; };
 		9B3E4A79222A137600A575CE /* DrawExamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3E4A78222A137600A575CE /* DrawExamples.swift */; };
-		9B4C7B372498D307005AD45F /* Gameboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B4C7B362498D307005AD45F /* Gameboard.swift */; };
-		9BF1FDAC2425DA9A0077056D /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF1FDAB2425DA9A0077056D /* GridView.swift */; };
+		9B6D55C62498DCB4006052C0 /* BaseSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6D55C52498DCB4006052C0 /* BaseSquare.swift */; };
 		9BF1FDAE2425E60A0077056D /* GetPuzzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF1FDAD2425E60A0077056D /* GetPuzzle.swift */; };
 /* End PBXBuildFile section */
 
@@ -29,8 +28,7 @@
 		9B12A5D8220D9CC400C7EFF5 /* Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
 		9B3E4A76222A005B00A575CE /* SudokuGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuGame.swift; sourceTree = "<group>"; };
 		9B3E4A78222A137600A575CE /* DrawExamples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawExamples.swift; sourceTree = "<group>"; };
-		9B4C7B362498D307005AD45F /* Gameboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Gameboard.swift; sourceTree = "<group>"; };
-		9BF1FDAB2425DA9A0077056D /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
+		9B6D55C52498DCB4006052C0 /* BaseSquare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSquare.swift; sourceTree = "<group>"; };
 		9BF1FDAD2425E60A0077056D /* GetPuzzle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPuzzle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -90,8 +88,7 @@
 		9B87CCBD2463FBE0005EB3AF /* VIews */ = {
 			isa = PBXGroup;
 			children = (
-				9BF1FDAB2425DA9A0077056D /* GridView.swift */,
-				9B4C7B362498D307005AD45F /* Gameboard.swift */,
+				9B6D55C52498DCB4006052C0 /* BaseSquare.swift */,
 			);
 			path = VIews;
 			sourceTree = "<group>";
@@ -171,8 +168,7 @@
 				9B3E4A77222A005B00A575CE /* SudokuGame.swift in Sources */,
 				9B3E4A79222A137600A575CE /* DrawExamples.swift in Sources */,
 				9B12A5C7220D9CA000C7EFF5 /* AppDelegate.swift in Sources */,
-				9B4C7B372498D307005AD45F /* Gameboard.swift in Sources */,
-				9BF1FDAC2425DA9A0077056D /* GridView.swift in Sources */,
+				9B6D55C62498DCB4006052C0 /* BaseSquare.swift in Sources */,
 				9B12A5D9220D9CC400C7EFF5 /* Cell.swift in Sources */,
 				9BF1FDAE2425E60A0077056D /* GetPuzzle.swift in Sources */,
 			);
@@ -315,6 +311,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZFU5YKYZ64;
 				INFOPLIST_FILE = SudokuSolver2/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -322,7 +319,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.radev.SudokuSolver2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -333,6 +330,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZFU5YKYZ64;
 				INFOPLIST_FILE = SudokuSolver2/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -340,7 +338,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.radev.SudokuSolver2;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
