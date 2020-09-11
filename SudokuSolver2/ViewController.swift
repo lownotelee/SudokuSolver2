@@ -22,7 +22,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
     let bigSquare1 = [
         [3,0,0,7,0,4,0,9,0],
@@ -102,7 +102,7 @@ class ViewController: UIViewController {
     
     func createCellButtons() {
         let boardWidth = baseSquare.frame.minX
-        print("minX is \(baseSquare.frame.minX), maxX is \(baseSquare.frame.maxX)")
+        //print("minX is \(baseSquare.frame.minX), maxX is \(baseSquare.frame.maxX)")
     }
     
     func putBaseSquareOn() {

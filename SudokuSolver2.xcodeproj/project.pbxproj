@@ -15,6 +15,9 @@
 		9B3E4A77222A005B00A575CE /* SudokuGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3E4A76222A005B00A575CE /* SudokuGame.swift */; };
 		9B3E4A79222A137600A575CE /* DrawExamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B3E4A78222A137600A575CE /* DrawExamples.swift */; };
 		9B6D55C62498DCB4006052C0 /* BaseSquare.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9B6D55C52498DCB4006052C0 /* BaseSquare.swift */; };
+		9BC274B9250AD25700275738 /* CellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC274B8250AD25700275738 /* CellView.swift */; };
+		9BC274BB250B2FF000275738 /* testingThigns.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC274BA250B2FF000275738 /* testingThigns.swift */; };
+		9BC274BD250B306E00275738 /* oldMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC274BC250B306E00275738 /* oldMethod.swift */; };
 		9BF1FDAE2425E60A0077056D /* GetPuzzle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BF1FDAD2425E60A0077056D /* GetPuzzle.swift */; };
 /* End PBXBuildFile section */
 
@@ -29,6 +32,9 @@
 		9B3E4A76222A005B00A575CE /* SudokuGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SudokuGame.swift; sourceTree = "<group>"; };
 		9B3E4A78222A137600A575CE /* DrawExamples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawExamples.swift; sourceTree = "<group>"; };
 		9B6D55C52498DCB4006052C0 /* BaseSquare.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseSquare.swift; sourceTree = "<group>"; };
+		9BC274B8250AD25700275738 /* CellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellView.swift; sourceTree = "<group>"; };
+		9BC274BA250B2FF000275738 /* testingThigns.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testingThigns.swift; sourceTree = "<group>"; };
+		9BC274BC250B306E00275738 /* oldMethod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = oldMethod.swift; sourceTree = "<group>"; };
 		9BF1FDAD2425E60A0077056D /* GetPuzzle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetPuzzle.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -89,6 +95,9 @@
 			isa = PBXGroup;
 			children = (
 				9B6D55C52498DCB4006052C0 /* BaseSquare.swift */,
+				9BC274BA250B2FF000275738 /* testingThigns.swift */,
+				9BC274B8250AD25700275738 /* CellView.swift */,
+				9BC274BC250B306E00275738 /* oldMethod.swift */,
 			);
 			path = VIews;
 			sourceTree = "<group>";
@@ -168,6 +177,9 @@
 				9B3E4A77222A005B00A575CE /* SudokuGame.swift in Sources */,
 				9B3E4A79222A137600A575CE /* DrawExamples.swift in Sources */,
 				9B12A5C7220D9CA000C7EFF5 /* AppDelegate.swift in Sources */,
+				9BC274BD250B306E00275738 /* oldMethod.swift in Sources */,
+				9BC274B9250AD25700275738 /* CellView.swift in Sources */,
+				9BC274BB250B2FF000275738 /* testingThigns.swift in Sources */,
 				9B6D55C62498DCB4006052C0 /* BaseSquare.swift in Sources */,
 				9B12A5D9220D9CC400C7EFF5 /* Cell.swift in Sources */,
 				9BF1FDAE2425E60A0077056D /* GetPuzzle.swift in Sources */,
