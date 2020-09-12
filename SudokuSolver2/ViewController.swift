@@ -22,7 +22,9 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, SudokuSolverProtocol {
+    
+    
     
     let cvc: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -73,9 +75,7 @@ class ViewController: UIViewController {
     }
     
     func updateSomeCell() {
-        game.setValueOfCell(at: 2, column: 2, with: 100)
-        let indexPath = IndexPath(item: 2, section: 2)
-        cvc.reloadItems(at: [indexPath])
+        game.setValueOfCell(at: 2, column: 2, with: 10)
     }
     
     func setCVCConstraints() {
@@ -89,6 +89,11 @@ class ViewController: UIViewController {
             cvc.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: offSet),
             cvc.heightAnchor.constraint(equalTo: self.view.widthAnchor, constant: (offSet * -2))
         ])
+    }
+    
+    func setValueOfCell(at row: Int, column: Int, with value: Int) {
+        let indexPath = IndexPath(item: column, section: row)
+        cvc.reloadItems(at: [indexPath])
     }
 
     @objc func buttonAction(sender: UIButton!) {

@@ -1,5 +1,9 @@
 import Foundation
 
+protocol SudokuSolverProtocol {
+    func setValueOfCell(at row: Int, column: Int, with value: Int)
+}
+
 //TODO: find out why i made this a struct
 struct SudokuSolver {
     private(set) var cells = [Cell]()
