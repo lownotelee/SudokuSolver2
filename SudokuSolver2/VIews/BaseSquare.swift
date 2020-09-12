@@ -7,68 +7,11 @@ class BaseSquare: UIView {
     let thickLine: CGFloat = 5
     let thinLine: CGFloat  = 1
 
-    var viewList: [CellView] = []
-
-    let xAxisStack   = UIStackView()
 
     init(_ cellsWide: Int) {
         self.cellsWide = cellsWide
         self.boxWidth = Int(sqrt(Double(cellsWide)))
         super.init(frame: .zero)
-        backgroundColor = .systemGray2
-        makeListOfCells()
-        setUpXAxisStackView()
-        fillStacks()
-        buildVStack()
-        makeOneCellRed()
-    }
-
-    func makeListOfCells() {
-        for _ in 0..<(cellsWide * cellsWide) {
-            viewList.append(CellView(cellNumber: "f", textColor: .black))
-        }
-    }
-
-    func setUpXAxisStackView() {
-        xAxisStack.axis = .horizontal
-        xAxisStack.alignment = .fill
-        xAxisStack.distribution = .fillEqually
-        xAxisStack.translatesAutoresizingMaskIntoConstraints = false
-    }
-
-    func setUpYAxisStackView(stackView: UIStackView) {
-        stackView.axis = .vertical
-        stackView.alignment = .fill
-        stackView.distribution = .fillEqually
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-    }
-
-    func fillStacks() {
-        for i in 0..<cellsWide {
-            let yAxisStack = UIStackView()
-            setUpYAxisStackView(stackView: yAxisStack)
-
-            for j in 0..<cellsWide {
-                yAxisStack.addArrangedSubview(viewList[(i*cellsWide + j)])
-
-            }
-            xAxisStack.addArrangedSubview(yAxisStack)
-        }
-    }
-
-    func buildVStack() {
-        self.addSubview(xAxisStack)
-
-        NSLayoutConstraint.activate([
-            xAxisStack.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            xAxisStack.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            xAxisStack.topAnchor.constraint(equalTo: self.topAnchor),
-            xAxisStack.bottomAnchor.constraint(equalTo: self.bottomAnchor)
-        ])
-    }
-
-    func makeOneCellRed() {
-        
     }
 
     required init(coder: NSCoder) {
@@ -96,6 +39,7 @@ class BaseSquare: UIView {
             // actually draw the path
             context!.strokePath()
         }
+        
         for verticalScaler in 0...cellsWide {
             if verticalScaler % boxWidth == 0 {
                 lineWidth = thickLine
