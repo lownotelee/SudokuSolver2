@@ -24,6 +24,14 @@ import UIKit
 
 class ViewController: UIViewController {
     
+    let cvc: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.translatesAutoresizingMaskIntoConstraints = false
+        cv.register(SudokuCollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        return cv
+    }()
+    
     let bigSquare1 = [
         [3,0,0,7,0,4,0,9,0],
         [0,2,8,6,0,0,0,7,0],
@@ -39,25 +47,22 @@ class ViewController: UIViewController {
     // lazy because it can't load the count from bigSquare until after the game is initialised
     lazy var game = SudokuSolver(sizeOfPuzzle: 9 /*bigSquare1.count*/, puzzleToLoad: bigSquare1)
     
-    @IBOutlet private var cellButtons: [UIButton] = []
-    
-    let screenSize: CGRect = UIScreen.main.bounds
+    let screenSize = UIScreen.main.bounds
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .systemBackground
         
-        let cellsWide = bigSquare1.count
+        cvc.delegate = self
+        cvc.dataSource = self
         
-        let sudokuGrid = GridView(frame: CGRect(x:10, y:100, width: screenSize.width - 20, height: screenSize.width - 20))
-        
-        self.view.addSubview(sudokuGrid)
-        
-        createGrid(with: sudokuGrid, cellsWide)
-        
-
-        //let solveButton = UIButton(frame: CGRect(x: (drawExamples.frame.width)/2, y: (screenSize.height - 200), width: frameSides, height: frameSides/9))
-        //let solveButton = UIButton(type: .roundedRect)
-        
+        setCVCConstraints()
+        putSolveButtonOn()
+        updateSomeCell()
+    }
+    
+    // TODO: Create a custom button and put the button on using constraints
+    func putSolveButtonOn() {
         let solveButton = UIButton(frame: CGRect(x: (screenSize.width/2)-50, y: 600, width: 100, height: 50))
         solveButton.backgroundColor = .blue
         solveButton.setTitleColor(.white, for: .normal)
@@ -65,107 +70,72 @@ class ViewController: UIViewController {
         solveButton.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         
         self.view.addSubview(solveButton)
-        
-        sudokuGrid.addLine(fromPoint: CGPoint(x: 0,y: 0), toPoint: CGPoint(x: 100,y: 100), line: 5)
-        
-        /*
-        var targetCell: Int = 0
-         
-        let cellWidth = Double(frameSides/CGFloat(puzzleSize))
-        
-        var rowScaler: Double = 0
-        var columnScaler: Double = 0
-        
-        for row in 0..<cellsWide {
-            rowScaler = Double(row)/Double(cellsWide)
-            yStartCoord = (Double(frameSides) * rowScaler) + Double(gridArea.frame.minY)
-            for column in 0..<cellsWide {
-                
-                columnScaler = Double(column)/Double(cellsWide)
-                xStartCoord = (Double(frameSides) * columnScaler) + Double(gridArea.frame.minX)
-                
-                let cell = UIButton(frame: CGRect(x: xStartCoord, y: yStartCoord, width: cellWidth, height: cellWidth))
-                
-                // if the cell to be drawn has a value, write the value in black
-                if let value = game.cells[targetCell].value {
-                    cell.setTitle(String(value), for: .normal)
-                    cell.setTitleColor(.black, for: .normal)
-                } else {    // if not, write nothing in red
-                    cell.setTitle("", for: .normal)
-                    cell.setTitleColor(.red, for: .normal)
-                }
-                
-                targetCell += 1
-                
-                cell.addTarget(self, action: #selector(cellButtonAction), for: .touchUpInside)
-                cellButtons.append(cell)
-                self.view.addSubview(cell)
-            }
-        }*/
     }
     
-    func createGrid(with gridView: UIView, _ puzzleSize: Int) {
-        let frameSides = gridView.bounds.width        
-
-        var lineWidth = 0
-
-        var xStartCoord:Double = 0
-        var yStartCoord: Double = 0
-        var scaler: Double = 0
-
+    func updateSomeCell() {
+        game.setValueOfCell(at: 2, column: 2, with: 100)
+        let indexPath = IndexPath(item: 2, section: 2)
+        cvc.reloadItems(at: [indexPath])
+    }
+    
+    func setCVCConstraints() {
+        view.addSubview(cvc)
         
-        for verticalScaler in 0...(puzzleSize) {
-            if verticalScaler % Int(sqrt(Float(puzzleSize))) == 0 {
-                lineWidth = 5
-            } else {
-                lineWidth = 2
-            }
-            scaler = Double(verticalScaler)/Double(puzzleSize)
-            xStartCoord = (Double(frameSides) * scaler) + Double(gridView.bounds.minX)
-
-            //addLine(fromPoint: CGPoint(x: xStartCoord, y: Double(gridView.frame.minY)),toPoint: CGPoint(x: xStartCoord, y: Double(gridView.bounds.maxX) + 90), line: lineWidth)
-        }
-
-        for horizontalScaler in 0...(puzzleSize) {
-            if horizontalScaler % Int(sqrt(Float(puzzleSize))) == 0 {
-                lineWidth = 5
-            } else {
-                lineWidth = 2
-            }
-
-            scaler = Double(horizontalScaler)/Double(puzzleSize)
-            yStartCoord = (Double(frameSides) * scaler) + Double(gridView.bounds.minY)
-
-            
-            //addLine(fromPoint: CGPoint(x: Double(gridView.bounds.minX), y: Double(yStartCoord)), toPoint: CGPoint(x: Double(gridView.bounds.maxX), y: Double(yStartCoord)), line: lineWidth)
-        }
+        let offSet: CGFloat = view.bounds.width * (0.05)
+        
+        NSLayoutConstraint.activate([
+            cvc.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            cvc.centerYAnchor.constraint(equalTo: view.centerYAnchor),
+            cvc.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: offSet),
+            cvc.heightAnchor.constraint(equalTo: self.view.widthAnchor, constant: (offSet * -2))
+        ])
     }
-    
-    func updateCell() {
-        print("fucklallla")
-        print(cellButtons[21])
-    }
-    
-    func addLine(fromPoint start: CGPoint, toPoint end: CGPoint, line thickness: Int) {
-        let line = CAShapeLayer()
-        let linePath = UIBezierPath()
-        linePath.move(to: start)
-        linePath.addLine(to: end)
-        line.path = linePath.cgPath
-        line.strokeColor = UIColor.black.cgColor
-        line.lineWidth = CGFloat(thickness)
-        line.lineJoin = CAShapeLayerLineJoin.round
-        self.view.layer.addSublayer(line)
-    }
-    
-    @objc func cellButtonAction(sender: UIButton!) {
-        if let cellNumber = cellButtons.firstIndex(of: sender) {
-            print("cellNum is \(cellNumber), value of cell is \(String(describing: game.cells[cellNumber].value))")
-        }
-    }
-    
+
     @objc func buttonAction(sender: UIButton!) {
         print("Button tapped")
         game.solve()
+    }
+}
+
+extension ViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return 9
+    }
+    
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        return 9
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = cvc.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! SudokuCollectionViewCell
+        
+        if let cellValue = game.getValueOfCellAt(row: indexPath.section, column: indexPath.item) {
+            cell.cellText.text = String(cellValue)
+        } else {
+            cell.cellText.text = ""
+        }
+        
+        cell.cellText.textColor = game.getPredefinedStatusOfCell(at: indexPath.section, column: indexPath.row) ? .black : .systemBlue
+        
+        cell.layer.borderWidth = 0.5
+        cell.layer.borderColor = UIColor.black.cgColor
+        
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: cvc.bounds.width/9, height: cvc.bounds.width/9)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print("tapped cell at \(indexPath)")
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
     }
 }
