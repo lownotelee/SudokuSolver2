@@ -22,9 +22,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, SudokuSolverProtocol {
-    
-    
+class ViewController: UIViewController {
     
     let cvc: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -34,29 +32,53 @@ class ViewController: UIViewController, SudokuSolverProtocol {
         return cv
     }()
     
-    let bigSquare1 = [
-        [3,0,0,7,0,4,0,9,0],
-        [0,2,8,6,0,0,0,7,0],
-        [0,0,0,0,0,0,0,1,2],
-        [0,9,0,0,5,0,0,4,7],
-        [0,5,6,1,0,0,9,0,0],
-        [1,0,4,0,3,0,0,5,6],
-        [5,0,2,4,0,8,7,0,1],
-        [7,3,1,2,0,0,0,0,0],
-        [4,0,0,3,0,0,2,6,0]
-    ]
-    
-    // lazy because it can't load the count from bigSquare until after the game is initialised
-    lazy var game = SudokuSolver(sizeOfPuzzle: 9 /*bigSquare1.count*/, puzzleToLoad: bigSquare1)
+    //    let bigSquare1 = [
+    //        [3,0,0,7,0,4,0,9,0],
+    //        [0,2,8,6,0,0,0,7,0],
+    //        [0,0,0,0,0,0,0,1,2],
+    //        [0,9,0,0,5,0,0,4,7],
+    //        [0,5,6,1,0,0,9,0,0],
+    //        [1,0,4,0,3,0,0,5,6],
+    //        [5,0,2,4,0,8,7,0,1],
+    //        [7,3,1,2,0,0,0,0,0],
+    //        [4,0,0,3,0,0,2,6,0]
+    //    ]
+    //
+    var game: SudokuSolver
     
     let screenSize = UIScreen.main.bounds
+    
+    init(puzzleToLoad: [[Int]]) {
+        
+        
+        game = SudokuSolver(sizeOfPuzzle: 9 /*bigSquare1.count*/, puzzleToLoad: puzzleToLoad)
+        
+        super.init(nibName: nil, bundle: nil)
+        
+        game.delegate = self
+        
+        //ViewController.delegate = self
+        
+        cvc.delegate = self
+        cvc.dataSource = self
+    }
+    
+//    func loadUpCellsToCVC() {
+//        var indexPath = IndexPath(item: 0, section: 0)
+//        for sudokuCell in game.cells {
+//            indexPath.item = sudokuCell.column
+//            indexPath.section = sudokuCell.row
+//        }
+//        cvc.reloadData()
+//    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
-        
-        cvc.delegate = self
-        cvc.dataSource = self
         
         setCVCConstraints()
         putSolveButtonOn()
@@ -75,7 +97,8 @@ class ViewController: UIViewController, SudokuSolverProtocol {
     }
     
     func updateSomeCell() {
-        game.setValueOfCell(at: 2, column: 2, with: 10)
+        
+        //print(game!.cells[3])
     }
     
     func setCVCConstraints() {
@@ -91,14 +114,16 @@ class ViewController: UIViewController, SudokuSolverProtocol {
         ])
     }
     
-    func setValueOfCell(at row: Int, column: Int, with value: Int) {
-        let indexPath = IndexPath(item: column, section: row)
-        cvc.reloadItems(at: [indexPath])
-    }
-
     @objc func buttonAction(sender: UIButton!) {
         print("Button tapped")
         game.solve()
+    }
+}
+
+extension ViewController: SudokuSolverProtocol {
+    func setValueOfCell(atRow row: Int, column: Int, withValue value: Int) {
+        let indexPath = IndexPath(item: column, section: row)
+        cvc.reloadItems(at: [indexPath])
     }
 }
 
@@ -119,9 +144,8 @@ extension ViewController: UICollectionViewDelegateFlowLayout, UICollectionViewDa
         } else {
             cell.cellText.text = ""
         }
-        
         cell.cellText.textColor = game.getPredefinedStatusOfCell(at: indexPath.section, column: indexPath.row) ? .black : .systemBlue
-        
+                
         cell.layer.borderWidth = 0.5
         cell.layer.borderColor = UIColor.black.cgColor
         

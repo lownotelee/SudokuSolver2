@@ -1,12 +1,14 @@
 import Foundation
 
 protocol SudokuSolverProtocol {
-    func setValueOfCell(at row: Int, column: Int, with value: Int)
+    func setValueOfCell(atRow row: Int, column: Int, withValue value: Int)
 }
 
 //TODO: find out why i made this a struct
-struct SudokuSolver {
+class SudokuSolver {
     private(set) var cells = [Cell]()
+    
+    var delegate: SudokuSolverProtocol?
     
     let sizeOfSmallSquare: Int
     
@@ -24,34 +26,26 @@ struct SudokuSolver {
                 value = puzzleToLoad[row][column] != 0 ? puzzleToLoad[row][column] : nil
                 predefined = puzzleToLoad[row][column] != 0 ? true : false
                 let cell = Cell(value: value, isPredefined: predefined, row: row, column: column)
-                cells += [cell]
+                cells.append(cell)
             }
         }
         sizeOfSmallSquare = Int(sqrt(Double(sizeOfPuzzle)))
     }
     
     func solve() {
-        //printSomething()
-    }
-    
-    /// test function to make something happen
-    func printSomething() {
-        let row = getRow(at: 2)
-        for i in 0..<(row.count) {
-            print("row 2 column \(i) value is \(String(describing: row[i].value))")
-        }
+        var changeMade = false
         
-        let column = getColumn(at: 2)
-        for i in 0..<(column.count) {
-            print("row \(i) column \(2) value is \(String(describing: column[i].value))")
+        while changeMade == false {
+            findPossibilities()
+            changeMade = false
+            for cell in cells where (cell.possibilities.count == 1 && cell.value == nil) {
+                setValueOfCell(atRow: cell.row, column: cell.column, withValue: cell.possibilities[0])
+                changeMade = true
+            }
         }
+        print("got out")
         
-        print()
         
-        let smallSquare = getSmallSquare(at: 4, and: 8)
-        for i in 0..<(smallSquare.count) {
-            print("SS row \(smallSquare[i].row) column \(smallSquare[i].column) value is \(String(describing: smallSquare[i].value))")
-        }
     }
     
     // TODO: I feel I should probably throw an error or something if there is more than 1 found cell
@@ -60,7 +54,6 @@ struct SudokuSolver {
         guard foundCell.count == 1 else {
             return nil
         }
-        
         return foundCell[0].value
     }
     
@@ -73,10 +66,12 @@ struct SudokuSolver {
         return foundCell[0].isPredefined
     }
     
-    /// Mutating because it changes the set of cells
-    mutating func setValueOfCell(at row: Int, column: Int, with value: Int) {
+    func setValueOfCell(atRow row: Int, column: Int, withValue value: Int) {
         if let cellIndex = cells.firstIndex(where: {$0.row == row && $0.column == column}) {
             cells[cellIndex].value = value
+            if let delegate = delegate {
+                delegate.setValueOfCell(atRow: row, column: column, withValue: value)
+            }
         } else {
             print("couldn't set value \(value) at row \(row) and column \(column)")
         }
@@ -92,6 +87,7 @@ struct SudokuSolver {
         return cells.filter { $0.column == index }
     }
     
+    
     private func getSmallSquare(at down: Int, and across: Int) -> [Cell] {
         var holdingArray: [Cell] = []
         /// figure out the starting cell for that small square. use % to find how many cells back we need to go
@@ -102,8 +98,30 @@ struct SudokuSolver {
         return holdingArray
     }
     
+    private func cellIsPartOfNeighbour(changedCell: Cell, comparedCell: Cell) -> Bool {
+        if (changedCell.row == comparedCell.row) || (changedCell.column == comparedCell.column) {
+            return true
+        }
+        
+        var holdingArray: [Cell] = []
+        /// figure out the starting cell for that small square. use % to find how many cells back we need to go
+        let startingDown = comparedCell.row - (comparedCell.row % sizeOfSmallSquare)
+        let startingAcross = comparedCell.column - (comparedCell.column % sizeOfSmallSquare)
+        holdingArray = cells.filter { $0.column >= startingAcross && $0.column < (startingAcross + sizeOfSmallSquare) && $0.row >= startingDown && $0.row < (startingDown + sizeOfSmallSquare)}
+        if holdingArray.contains(changedCell) {
+            return true
+        }
+        return false
+    }
+    
+    private func updatePossibilities(for changedCell: Cell) {
+        for (index, cell) in cells.enumerated() where (cellIsPartOfNeighbour(changedCell: changedCell, comparedCell: cell) && cell.value == nil) {
+            cells[index].possibilities.removeAll{$0 == changedCell.value!}
+        }
+    }
+    
     /// Mutating because it changes the set of cells
-    private mutating func findPossibilities() {
+    private func findPossibilities() {
         // TODO: Test this section, i changed the size of the array from hard coded to calculated
         let arrayOfPotentialNumbers: Set = Set(1...(sizeOfSmallSquare * sizeOfSmallSquare))
         var knownNumbers: [Int] = []
@@ -116,11 +134,30 @@ struct SudokuSolver {
             }
             /// Fill up the array with the numbers that are known
             knownNumbers =  getArrayOfKnownNumbers(for: getRow(at: cells[cellIndex].row)) +
-                            getArrayOfKnownNumbers(for: getColumn(at: cells[cellIndex].column)) +
-                            getArrayOfKnownNumbers(for: getSmallSquare(at: cells[cellIndex].row, and: cells[cellIndex].column))
+                getArrayOfKnownNumbers(for: getColumn(at: cells[cellIndex].column)) +
+                getArrayOfKnownNumbers(for: getSmallSquare(at: cells[cellIndex].row, and: cells[cellIndex].column))
             /// Make the possibilities array equal to
             cells[cellIndex].possibilities = arrayOfPotentialNumbers.filter {!knownNumbers.contains($0)}
-            print("cell is \(cells[cellIndex])")
+        }
+    }
+    
+    private func updatePossibilitiesForRow(for changedCell: Cell) {
+        
+        for (index, cell) in cells.enumerated() {
+            if cell.row == changedCell.row {
+                cells[index].possibilities.removeAll{$0 == changedCell.value}
+            }
+        }
+        
+        
+        if let value = changedCell.value {
+            for index in (0..<cells.count) {
+                if (cells[index].row == changedCell.row) && (cells[index].possibilities.contains(value)){
+                    cells[index].possibilities.removeAll{$0 == value}
+                }
+            }
+        } else {
+            print("cell has no value, how'd you get here?")
         }
     }
     

@@ -5,7 +5,7 @@
 
 import Foundation
 
-struct Cell {
+struct Cell: Hashable {
     var possibilities: [Int]
     var value: Int? {
         didSet {

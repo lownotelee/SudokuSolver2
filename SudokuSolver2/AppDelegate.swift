@@ -20,9 +20,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         
+        let bigSquare1 = [
+            [3,0,0,7,0,4,0,9,0],
+            [0,2,8,6,0,0,0,7,0],
+            [0,0,0,0,0,0,0,1,2],
+            [0,9,0,0,5,0,0,4,7],
+            [0,5,6,1,0,0,9,0,0],
+            [1,0,4,0,3,0,0,5,6],
+            [5,0,2,4,0,8,7,0,1],
+            [7,3,1,2,0,0,0,0,0],
+            [4,0,0,3,0,0,2,6,0]
+        ]
         
-        
-        window?.rootViewController = ViewController()
+        window?.rootViewController = ViewController(puzzleToLoad: bigSquare1)
         return true
     }
 
