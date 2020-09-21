@@ -84,7 +84,6 @@ class SudokuSolver {
                 DispatchQueue.main.async {
                     delegate.setValueOfCell(atRow: row, column: column, withValue: value)
                 }
-                
             }
         } else {
             print("couldn't set value \(value) at row \(row) and column \(column)")
@@ -138,8 +137,8 @@ class SudokuSolver {
     /// Mutating because it changes the set of cells
     private func findPossibilities() {
         // TODO: Test this section, i changed the size of the array from hard coded to calculated
-        let arrayOfPotentialNumbers: Set = Set(1...(sizeOfSmallSquare * sizeOfSmallSquare))
-        var knownNumbers: [Int] = []
+        let arrayOfPotentialNumbers = Set(1...(sizeOfSmallSquare * sizeOfSmallSquare))
+        var knownNumbers: Set<Int> = []
         
         /// iterate through the cells.
         for cellIndex in 0..<(cells.count) {
@@ -148,9 +147,11 @@ class SudokuSolver {
                 continue
             }
             /// Fill up the array with the numbers that are known
-            knownNumbers =  getArrayOfKnownNumbers(for: getRow(at: cells[cellIndex].row)) +
-                getArrayOfKnownNumbers(for: getColumn(at: cells[cellIndex].column)) +
-                getArrayOfKnownNumbers(for: getSmallSquare(at: cells[cellIndex].row, and: cells[cellIndex].column))
+            
+            knownNumbers.formUnion(getArrayOfKnownNumbers(for: getRow(at: cells[cellIndex].row)))
+            knownNumbers.formUnion(getArrayOfKnownNumbers(for: getColumn(at: cells[cellIndex].column)))
+            knownNumbers.formUnion(getArrayOfKnownNumbers(for: getSmallSquare(at: cells[cellIndex].row, and: cells[cellIndex].column)))
+                
             /// Make the possibilities array equal to
             cells[cellIndex].possibilities = arrayOfPotentialNumbers.filter {!knownNumbers.contains($0)}
         }
@@ -178,11 +179,11 @@ class SudokuSolver {
     
     // returns an array of known numbers given an array of cells. Used by findPossibilities
     // TODO: convert to Set instead of Array
-    private func getArrayOfKnownNumbers(for cells: [Cell]) -> [Int] {
-        var arrayOfNumbers: [Int] = []
+    private func getArrayOfKnownNumbers(for cells: [Cell]) -> Set<Int> {
+        var arrayOfNumbers: Set<Int> = []
         for i in 0..<(cells.count) {
             if let foundNumber = cells[i].value {
-                arrayOfNumbers.append(foundNumber)
+                arrayOfNumbers.insert(foundNumber)
             }
         }
         return arrayOfNumbers
