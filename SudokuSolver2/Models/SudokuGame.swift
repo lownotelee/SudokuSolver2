@@ -20,6 +20,7 @@ class SudokuSolver {
         var value: Int?
         var predefined: Bool
         
+        
         /// iterate through the rows and columns of the provided puzzle and instanciate cells
         for row in 0..<sizeOfPuzzle {
             for column in 0..<sizeOfPuzzle {
@@ -33,19 +34,29 @@ class SudokuSolver {
     }
     
     func solve() {
-        var changeMade = false
+        //var changeMade = false
         
-        while changeMade == false {
-            findPossibilities()
-            changeMade = false
-            for cell in cells where (cell.possibilities.count == 1 && cell.value == nil) {
-                setValueOfCell(atRow: cell.row, column: cell.column, withValue: cell.possibilities[0])
-                changeMade = true
-            }
-        }
+        //var indexOfFirstEmptyCell = cells.firstIndex(where: { $0.value == nil })
+        //var indexOfLastEmptyCell  = cells.lastIndex(where:  { $0.value == nil })
+        
+        findPossibilities()
+        
+        performExclusiveSearch()
         print("got out")
+        for cell in cells {
+            print(cell.possibilities.count)
+        }
         
         
+    }
+    
+    func performExclusiveSearch() {
+        for (index, cell) in cells.enumerated() where (cell.possibilities.count == 1 && cell.value == nil) {
+            setValueOfCell(atRow: cell.row, column: cell.column, withValue: cell.possibilities[0])
+            updatePossibilities(for: cells[index])
+            //print("looping again")
+            performExclusiveSearch()
+        }
     }
     
     // TODO: I feel I should probably throw an error or something if there is more than 1 found cell
@@ -70,7 +81,10 @@ class SudokuSolver {
         if let cellIndex = cells.firstIndex(where: {$0.row == row && $0.column == column}) {
             cells[cellIndex].value = value
             if let delegate = delegate {
-                delegate.setValueOfCell(atRow: row, column: column, withValue: value)
+                DispatchQueue.main.async {
+                    delegate.setValueOfCell(atRow: row, column: column, withValue: value)
+                }
+                
             }
         } else {
             print("couldn't set value \(value) at row \(row) and column \(column)")
@@ -115,6 +129,7 @@ class SudokuSolver {
     }
     
     private func updatePossibilities(for changedCell: Cell) {
+        //print(changedCell)
         for (index, cell) in cells.enumerated() where (cellIsPartOfNeighbour(changedCell: changedCell, comparedCell: cell) && cell.value == nil) {
             cells[index].possibilities.removeAll{$0 == changedCell.value!}
         }
